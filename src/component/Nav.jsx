@@ -3,8 +3,14 @@
 import { useState } from "react";
 import { Button } from "@heroui/react";
 import Link from "next/link";
+import { signOut, useSession } from "@/lib/auth-client";
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { data, isPending } = useSession();
+  const userName = data?.user?.name;
+  if (isPending) return <p>Loading...</p>;
+
   return (
     <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
       <header className="flex h-16 items-center justify-between px-6">
@@ -48,20 +54,32 @@ const Nav = () => {
             <Link href="/dashboard">Dashboard</Link>
           </li>
         </ul>
-        <div>
-          <Link
-            href="/auth/signin"
-            className={"py-2 px-5 rounded-2xl no-underline bg-accent mr-3"}
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/auth/signup"
-            className={"py-2 px-5 rounded-2xl no-underline bg-accent mr-3"}
-          >
-            Sign Up
-          </Link>
-        </div>
+        {data ? (
+          <div className="flex items-center gap-5">
+            <div>Welcome {userName}</div>
+            <button
+              onClick={() => signOut()}
+              className="py-2 px-5 bg-red-400 font-bold rounded-3xl"
+            >
+              Sign Out
+            </button>
+          </div>
+        ) : (
+          <div>
+            <Link
+              href="/auth/signin"
+              className={"py-2 px-5 rounded-2xl no-underline bg-accent mr-3"}
+            >
+              Sign In
+            </Link>
+            <Link
+              href="/auth/signup"
+              className={"py-2 px-5 rounded-2xl no-underline bg-accent mr-3"}
+            >
+              Sign Up
+            </Link>
+          </div>
+        )}
       </header>
       {isMenuOpen && (
         <div className="border-t border-separator md:hidden">

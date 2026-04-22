@@ -13,6 +13,7 @@ import {
   TextField,
 } from "@heroui/react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const SignUpForm = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,9 +27,14 @@ const SignUpForm = () => {
       name: userData.name, // required
       email: userData.email, // required
       password: userData.password, // required
+      callbackURL: "/auth/signin",
     });
 
-    console.log(data || error);
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success("Successfully signed up");
+    }
   }
 
   return (
