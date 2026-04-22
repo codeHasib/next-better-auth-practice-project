@@ -12,11 +12,13 @@ import {
   Label,
   TextField,
 } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 const SignUpForm = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter();
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -34,6 +36,7 @@ const SignUpForm = () => {
       toast.error(error.message);
     } else {
       toast.success("Successfully signed up");
+      router.push("/auth/signin");
     }
   }
 
