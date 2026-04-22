@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Link, Button } from "@heroui/react";
+import { Button } from "@heroui/react";
+import Link from "next/link";
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
@@ -66,13 +67,13 @@ const Nav = () => {
         <div className="border-t border-separator md:hidden">
           <ul className="flex flex-col gap-2 p-4">
             <li>
-              <Link href="#" className="block py-2">
-                Features
+              <Link href="/" className="block py-2">
+                Home
               </Link>
             </li>
             <li>
-              <Link href="#" className="block py-2">
-                Pricing
+              <Link href="/dashboard" className="block py-2">
+                Dashboard
               </Link>
             </li>
           </ul>
